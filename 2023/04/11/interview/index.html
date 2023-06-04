@@ -26,7 +26,7 @@
 <meta property="og:description" content="Transformer Related 1. BN vs. LN y&#x3D;x−E[x]Var[x]+ϵ∗γ+βy &#x3D; \frac{x-\text{E}[x]}{\sqrt{\text{Var}[x]+\epsilon}}*\gamma+\beta y&#x3D;Var[x]+ϵ​x−E[x]​∗γ+β   其中，γ,β\gamma, \betaγ,β为可学习的仿射变换矩阵，分别用于scale和offset">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-11T06:01:29.201Z">
-<meta property="article:modified_time" content="2023-04-11T14:13:43.288Z">
+<meta property="article:modified_time" content="2023-06-04T11:48:47.218Z">
 <meta property="article:author" content="Jie Wu">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          3.1k 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          18 分钟
+          26 分钟
         
       </span>
     
@@ -390,6 +390,24 @@ M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#TODO</span><br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Attention</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <br></code></pre></td></tr></table></figure>
 <h3 id="4-Dropout">4. Dropout</h3>
 <h2 id="NLP">NLP</h2>
+<ul>
+<li><strong>词袋模型与词向量模型：</strong></li>
+</ul>
+<blockquote>
+<p>词袋模型和词向量模型是两种用于文本表示的方法。</p>
+<p>词袋模型是一种基于计数的方法，它将文本表示为一个固定长度的向量，其中每个维度表示一个特定词汇的出现次数。它忽略了单词顺序和上下文关系，仅关注单词的出现频率。因此，词袋模型不能捕捉词语之间的语义和上下文信息。</p>
+<p>相比之下，词向量模型（例如Word2Vec、GloVe和FastText）可以将每个单词表示为一个连续的向量，称为词向量。这些向量捕捉了单词之间的语义关系和上下文信息。通过学习单词在语料库中的上下文信息，词向量模型可以在向量空间中表示单词之间的相似性和关联性。这使得词向量模型能够更好地处理语义相关性、单词类比和上下文推理等任务。</p>
+<p>总结而言，词袋模型简单地计算词汇的频率，而词向量模型则将每个单词表示为连续向量，能够更好地捕捉单词之间的语义和上下文关系。</p>
+</blockquote>
+<p>如下两篇简单的文本文档：<br>
+Jane wants to go to Shenzhen.<br>
+Bob wants to go to Shanghai.</p>
+<p>基于这两篇文档我们可以构建一个字典：<br>
+{‘Jane’:1, ‘wants’:2, ‘to’:4, ‘go’:2, ‘Shenzhen’:1, ‘Bob’:1, ‘Shanghai’:1}</p>
+<p>我们可将两篇文档表示为如下的向量：<br>
+例句1：[1,1,2,1,1,0,0]<br>
+例句2：[0,1,2,1,0,1,1]</p>
+<p><strong>词袋模型</strong>实际就是把文档表示成向量,其中向量的维数就是字典所含词的个数，在上例中，向量中的第i个元素就是统计该文档中对应字典中的第i个单词出现的个数，因此可认为词袋模型就是统计词频直方图的简单文档表示方法。</p>
 <p>GBDT</p>
 <p>RF</p>
 <p>bagging</p>
@@ -402,13 +420,40 @@ M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 <p>开放式问题：说一下对多任务训练（multi task learning）和多领域训练（multi domain learning）的理解，最好举一个例子；</p>
 <p>语义相似度估计： simcse，simbert，stentence bert</p>
 <h2 id="ML">ML</h2>
-<p>kl散度与交叉熵损失的区别</p>
+<ul>
+<li>
+<p>常用的损失函数</p>
+<ul>
+<li>
+<p>MSE，L2 loss</p>
+</li>
+<li>
+<p>MAE，L1 loss</p>
+</li>
+</ul>
+<p>上面两个是回归常用</p>
+<ul>
+<li>
+<p>Cross Entropy Loss，是<strong>非对称</strong>的，令两个分布为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span>, 其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>为目标分布，由训练数据集确定，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span>为预测的分布，则交叉熵<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>q</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>D</mi><mrow><mi>K</mi><mi>L</mi></mrow></msub><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>q</mi><mo stretchy="false">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">H(p,q)=D_{KL}(p,q)+H(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span><span class="mord mathnormal mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span>，</p>
+</li>
+<li>
+<p>Hinge Loss: 合页损失，用于SVM</p>
+</li>
+<li>
+<p>Focal Loss</p>
+</li>
+<li>
+<p>Relative Loss：相对熵，就是KL散度，KL散度的计算公式如下，也是非对称的</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mi>L</mi><mo stretchy="false">(</mo><mi>P</mi><mi mathvariant="normal">∥</mi><mi>Q</mi><mo stretchy="false">)</mo><mo>=</mo><mo>∑</mo><mi>P</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>log</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mfrac><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mrow><mi>Q</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mfrac><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">KL(P \| Q) = \sum P(x) \log \left( \frac{P(x)}{Q(x)} \right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord">∥</span><span class="mord mathnormal">Q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.8em;vertical-align:-0.65em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">Q</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span></span></span></p>
+</li>
+</ul>
+</li>
+<li>
+<p>KL散度与交叉熵损失的区别：数值上相差了一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">H(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span>,而恰好这是个由训练数据集确定的一个定值</p>
+</li>
+</ul>
 <p>梯度消失，过拟合，原因解决</p>
-<p>交叉熵不用mse why</p>
 <p>tanh 为什么比relu差</p>
-<p>数据并行和模型并行：</p>
-<p>模型蒸馏执行过程</p>
-<p>AUC ROC, AUC高召回？</p>
 <h2 id="算法八股">算法八股</h2>
 <p>二分查找：有无重复</p>
 <p>快排：</p>
@@ -478,6 +523,12 @@ M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/04/13/%E9%87%91%E8%9E%8D%E7%90%86%E8%AE%BA/" title="金融理论">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">金融理论</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
